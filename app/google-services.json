@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "898280115610",
+    "firebase_url": "https://socialheartbeat-87c4a.firebaseio.com",
+    "project_id": "socialheartbeat-87c4a",
+    "storage_bucket": "socialheartbeat-87c4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898280115610:android:fc86b6853fee6d95",
+        "android_client_info": {
+          "package_name": "heartbeat.social.tcs.socialhb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898280115610-1gmr87r18bb7d9nvc6dsgc2uu1b5p1n0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "heartbeat.social.tcs.socialhb",
+            "certificate_hash": "C240659EFB93545F58C9937C8C0CE96CEE00C66A"
+          }
+        },
+        {
+          "client_id": "898280115610-t06f3gt0bd3mkqpfqjohd6962lhm3cs2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwAF6Y5KOM5gLTiUCteWDsUD5jce-St98"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898280115610-t06f3gt0bd3mkqpfqjohd6962lhm3cs2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

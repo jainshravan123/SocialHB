@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sign_up_back_linear_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:paddingTop="30dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:focusableInTouchMode="true">
+
+
+
+    <!--  Name Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Firstname"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!--  Last Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Lastname"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!--  Home Contact Number Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_home_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Home Contact Number"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <!--  Work Contact Number Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_work_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Work Contact Number"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <!--  Personal Email Address Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_personal_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Personal Email Address"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <!--  Home Address Label -->
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="@color/grey_color_1">
+        <EditText android:id="@+id/input_home_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Home Address"
+            android:textColor="@color/black_color"
+            android:fontFamily="sans-serif"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+    //SignUp Submit Button
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/profileUpdateSubmitBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="15dp"
+        android:text="SUBMIT"
+        android:fontFamily="sans-serif"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white_color"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+
+</LinearLayout>

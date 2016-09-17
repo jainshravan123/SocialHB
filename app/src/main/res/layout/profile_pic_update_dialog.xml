@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sign_up_back_linear_layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    android:paddingTop="30dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:focusableInTouchMode="true">
+
+
+    <!--  Home Address Label -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/updatedProfilePicImageView"
+        android:layout_gravity="center_horizontal" />
+
+
+    //SignUp Submit Button
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/profilePicUpdateBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="15dp"
+        android:text="Update Picture"
+        android:fontFamily="sans-serif"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white_color"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:drawableLeft="@drawable/ic_file_upload_white_24dp"
+        android:paddingLeft="20dp"/>
+
+
+
+</LinearLayout>

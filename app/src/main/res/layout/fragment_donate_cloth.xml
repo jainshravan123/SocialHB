@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dccddc"
+    android:padding="16dp">
+
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="70dp"
+        android:id="@+id/edtBook"
+        android:textColor="#850909"
+        android:hint="Enter here ex:-(Trousers, Shirts)"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginBottom="106dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/btnSubmit"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="33dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/bookNumberPicker"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignTop="@+id/edtBook"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>

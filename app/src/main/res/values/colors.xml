@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimaryDark">#0D47A1</color>
+    <color name="colorAccent">#80DEEA</color>
+
+
+    <!-- Custom Colors -->
+    <color name="header">#27A59E</color>
+    <color name="button_color">#51D6CD</color>
+    <color name="text">#ffffff</color>
+    <color name="shadow">#505050</color>
+    <color name="background">#2c1f1a</color>
+    <color name="caption">#372721</color>
+    <color name="copyright">#503b32</color>
+    <color name="setting_devider">#503b32</color>
+    <color name="hint">#767676</color>
+    <color name="subtext">#bdbdbd</color>
+    <color name="image_background">#999999</color>
+    <color name="background_actionbar">#bb340e</color>
+    <color name="detail_background">#372721</color>
+    <color name="list_item_title">#fff</color>
+
+    <!-- background menu -->
+    <color name="list_background">#ffffff</color>
+    <!-- background menu dipencet -->
+    <color name="list_background_pressed">#FF9800</color>
+
+    <!-- jarak antar menu -->
+    <color name="list_divider">#C3C3C3</color>
+
+    <!-- app background -->
+    <color name="app_bg">#EEEEEE</color>
+
+    <!-- divider -->
+    <color name="divider">#257CC1</color>
+    <color name="btn_bg">#40A8D6</color>
+    <color name="btn_text">#FFFFFF</color>
+    <color name="form_bg">#FFFFFF</color>
+    <color name="form_border">#40A8D6</color>
+    <color name="white">#ffffff</color>
+    <color name="apptheme_primary">#009688</color>
+    <color name="apptheme_primary_dark">#00796b</color>
+    <color name="apptheme_accent">@android:color/white</color>
+    <color name="gradient_start">#50000000</color>
+    <color name="gradient_light_start">#30000000</color>
+    <color name="bg_login">#26ae90</color>
+    <color name="bg_register">#2e3237</color>
+    <color name="bg_main">#428bca</color>
+    <color name="white1">#ffffff</color>
+    <color name="input_login">#222222</color>
+    <color name="input_login_hint">#999999</color>
+    <color name="input_register">#888888</color>
+    <color name="input_register_bg">#3b4148</color>
+    <color name="input_register_hint">#5e6266</color>
+    <color name="btn_login">#bb340e</color>
+    <color name="btn_login_bg">#eceef1</color>
+    <color name="lbl_name">#333333</color>
+    <color name="btn_logut_bg">#ff6861</color>
+
+    <color name="black_color">#000000</color>
+    <color name="light_soil_color">#FFDAAF</color>
+    <color name="white_color">#ffffff</color>
+    <color name="light_sky_blue">#B0E2FF</color>
+    <color name="grey_color_1">#767676</color>
+    <color name="iron_color">#CCCCCC</color>
+    <color name="colorDialogPrimary">#3F51B5</color>
+    <color name="color_primary_2">#009688</color>
+    <color name="color_primary_3">#00796b</color>
+    <color name="green_color_2">#2d862d</color>
+</resources>
