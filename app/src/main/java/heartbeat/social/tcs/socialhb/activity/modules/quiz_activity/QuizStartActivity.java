@@ -146,11 +146,5 @@ public class QuizStartActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonRequest);
 
     }
-
-
-    //getting previous score details
-    public void getScoreDetails()
-    {
-
-    }
+    
 }
