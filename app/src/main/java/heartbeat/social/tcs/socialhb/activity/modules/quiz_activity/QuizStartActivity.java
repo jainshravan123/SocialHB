@@ -148,8 +148,9 @@ public class QuizStartActivity extends AppCompatActivity {
     }
 
 
+    //getting previous score details
     public void getScoreDetails()
     {
-        
+
     }
 }
