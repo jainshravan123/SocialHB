@@ -9,6 +9,9 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,6 +26,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import heartbeat.social.tcs.socialhb.R;
 import heartbeat.social.tcs.socialhb.activity.Dashboard;
 import heartbeat.social.tcs.socialhb.activity.SignIn;
+import heartbeat.social.tcs.socialhb.bean.CSRInit;
 import heartbeat.social.tcs.socialhb.bean.QuizScore;
 import heartbeat.social.tcs.socialhb.bean.SignInUser;
 import heartbeat.social.tcs.socialhb.bean.User;
@@ -42,6 +46,12 @@ public class QuizStartActivity extends AppCompatActivity {
     String TAG = "QuizStartActivity";
     SweetAlertDialog sAlertDialog;
     QuizScore quizScore;
+    QuizScore prev_quizScore;
+    CSRInit   prev_quiz_interestDetails;
+    ProgressBar progressBar;
+    LinearLayout linearLayout1;
+    LinearLayout linearLayout2;
+    TextView txt_quiz_highest_score, txt_quiz_interest;
 
 
     @Override
@@ -49,6 +59,11 @@ public class QuizStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_start);
 
+        progressBar   = (ProgressBar) findViewById(R.id.prgBar);
+        linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout1);
+        linearLayout2 = (LinearLayout) findViewById(R.id.linearLayout2);
+        txt_quiz_highest_score = (TextView) findViewById(R.id.txt_quiz_highest_score);
+        txt_quiz_interest = (TextView) findViewById(R.id.txt_quiz_interest);
         btn_start_quiz = (AppCompatButton) findViewById(R.id.btn_start_quiz);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +103,12 @@ public class QuizStartActivity extends AppCompatActivity {
                 }
             }
         });
+
+        try {
+            getScoreDetails();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getStartingQuizData() throws JSONException
@@ -146,5 +167,105 @@ public class QuizStartActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonRequest);
 
     }
-    
+
+
+    public void getScoreDetails() throws JSONException
+    {
+
+
+        String url = Web_API_Config.get_quiz_prev_score_details;
+
+        DBHelper dbHelper =new DBHelper(getApplicationContext());
+        JSONObject user_json_obj = new JSONObject();
+        user_json_obj.put("id", String.valueOf(dbHelper.getUserID()));
+        user_json_obj.put("emp_id", String.valueOf(dbHelper.getEmpID()));
+
+        final JSONObject quiz_json_obj = new JSONObject();
+        quiz_json_obj.put("user", user_json_obj);
+
+
+        //Create JSONObjectRequest for Volley
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.POST, url, quiz_json_obj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // the response is already constructed as a JSONObject!
+                        try {
+                            prev_quizScore = new QuizScore();
+                            prev_quizScore.setArea_of_interest_cat_id(response.getInt("area_of_interest_cat_id"));
+                            prev_quizScore.setCompletion_time(response.getString("completion_time"));
+                            prev_quizScore.setId(response.getInt("id"));
+                            prev_quizScore.setNo_of_qus(response.getInt("no_of_qus"));
+                            prev_quizScore.setQuiz_id(response.getString("quiz_id"));
+                            prev_quizScore.setScore(response.getInt("score"));
+                            prev_quizScore.setStart_time(response.getString("start_time"));
+                            prev_quizScore.setStatus(response.getInt("status"));
+
+
+                            getInterestCategoryName(prev_quizScore.getArea_of_interest_cat_id());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(this).add(jsonRequest);
+
+    }
+
+    public void getInterestCategoryName(int cat_id){
+
+        String url = Web_API_Config.csr_init_single_module + String.valueOf(cat_id);
+
+        //Create JSONObjectRequest for Volley
+        JsonObjectRequest jsonRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject csr_cat_response) {
+                        // the response is already constructed as a JSONObject!
+                        try {
+
+                            prev_quiz_interestDetails = new CSRInit();
+                            prev_quiz_interestDetails.setCsr_module_id(csr_cat_response.getInt("id"));
+                            prev_quiz_interestDetails.setCsr_module_name(csr_cat_response.getString("cat"));
+                            prev_quiz_interestDetails.setCsr_module_status(csr_cat_response.getInt("status"));
+                            prev_quiz_interestDetails.setCsr_module_icon(csr_cat_response.getString("cat_icon"));
+
+                            setData();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        Volley.newRequestQueue(this).add(jsonRequest);
+    }
+
+    public void setData()
+    {
+        progressBar.setVisibility(View.GONE);
+        linearLayout1.setVisibility(View.VISIBLE);
+        linearLayout2.setVisibility(View.VISIBLE);
+        btn_start_quiz.setVisibility(View.VISIBLE);
+
+        txt_quiz_highest_score.setText(String.valueOf(prev_quizScore.getScore()));
+        txt_quiz_interest.setText(String.valueOf(prev_quiz_interestDetails.getCsr_module_name()));
+
+    }
+
+
+
 }

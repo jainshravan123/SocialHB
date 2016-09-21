@@ -89,7 +89,7 @@ public class CSRInitModule extends AppCompatActivity {
         prgBar1.setVisibility(View.VISIBLE);
 
         String url = Web_API_Config.csr_init_enabled_modules;
-        Log.e("URL", url);
+        Log.e("CSR Initiative URL", url);
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url,

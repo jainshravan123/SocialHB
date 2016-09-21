@@ -15,6 +15,7 @@ public class Web_API_Config
     public static String user_profile_api               =           root_domain_url + "users/profile/";
     public static String enabled_modules                =           root_domain_url + "modules";
     public static String csr_init_enabled_modules       =           root_domain_url + "csrInitCategories";
+    public static String csr_init_single_module         =           root_domain_url + "csrInitCategories/";
     public static String csr_init_category_data         =           root_domain_url + "csrInitCategories/cat_data/";
 
     public static String utility_enabled_module         =           root_domain_url + "utility/enabledCategory";
@@ -46,6 +47,7 @@ public class Web_API_Config
     public static String calculating_quiz_score                     = root_domain_for_quiz + "calculateScore";
     public static String posting_starting_quiz_data                 = root_domain_for_quiz + "postStartingQuizData";
     public static String posting_final_quiz_score                   = root_domain_for_quiz + "postQuizScoreData";
+    public static String get_quiz_prev_score_details                = root_domain_for_quiz + "getQuizScore";
 
 
 
