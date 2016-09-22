@@ -6,8 +6,11 @@ package heartbeat.social.tcs.socialhb.bean;
 public class Web_API_Config
 {
 
+    //Local Server
+    public static String root_domain_url                =           "http://192.168.56.1:8080/SocialHearbeatWebServices/api/";
 
-    public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
+    //Hosting Server
+    //public static String root_domain_url              =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
     public static String root_image_url                 =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
 
     public static String user_login_api                 =           root_domain_url + "users/login";

@@ -85,6 +85,12 @@
         <activity
             android:name=".activity.modules.quiz_activity.QuizQusAnsActivity"
             android:theme="@style/CustomStyle1" />
+        <activity
+            android:name=".activity.modules.quiz_activity.QuizSubmitActivity"
+            android:theme="@style/CustomStyle1"/>
+        <activity
+            android:name=".activity.modules.quiz_activity.QuizResultActivity"
+            android:theme="@style/CustomStyle1"/>
 
         <service android:name=".service.MyFirebaseMessagingService">
             <intent-filter>
@@ -97,7 +103,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Trial2"></activity>
+        <activity android:name=".Trial2" />
+
     </application>
 
 </manifest>
