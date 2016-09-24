@@ -151,7 +151,7 @@ public class HeartBeatIndexModule extends AppCompatActivity {
                         // the response is already constructed as a JSONObject!
                         try {
 
-                            Log.e(TAG, response.toString());
+                           // Log.e(TAG, response.toString());
                             sAlertDialog.dismiss();
 
                             quizScore = new QuizScore();
