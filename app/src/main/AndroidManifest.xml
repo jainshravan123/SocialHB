@@ -84,7 +84,8 @@
             android:theme="@style/CustomStyle1" />
         <activity
             android:name=".activity.modules.quiz_activity.QuizQusAnsActivity"
-            android:theme="@style/CustomStyle1" />
+            android:theme="@style/CustomStyle1"
+            android:noHistory="true"/>
         <activity
             android:name=".activity.modules.quiz_activity.QuizSubmitActivity"
             android:theme="@style/CustomStyle1"/>
