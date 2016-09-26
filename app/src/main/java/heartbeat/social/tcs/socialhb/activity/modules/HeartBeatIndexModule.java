@@ -210,17 +210,20 @@ public class HeartBeatIndexModule extends AppCompatActivity {
                         // the response is already constructed as a JSONObject!
                         try {
                             prev_quizScore = new QuizScore();
-                            prev_quizScore.setArea_of_interest_cat_id(response.getInt("area_of_interest_cat_id"));
-                            prev_quizScore.setCompletion_time(response.getString("completion_time"));
                             prev_quizScore.setId(response.getInt("id"));
-                            prev_quizScore.setNo_of_qus(response.getInt("no_of_qus"));
-                            prev_quizScore.setQuiz_id(response.getString("quiz_id"));
-                            prev_quizScore.setScore(response.getInt("score"));
-                            prev_quizScore.setStart_time(response.getString("start_time"));
-                            prev_quizScore.setStatus(response.getInt("status"));
+                            if(prev_quizScore.getId() != 0){
+                                prev_quizScore.setArea_of_interest_cat_id(response.getInt("area_of_interest_cat_id"));
+                                prev_quizScore.setCompletion_time(response.getString("completion_time"));
+                                prev_quizScore.setNo_of_qus(response.getInt("no_of_qus"));
+                                prev_quizScore.setQuiz_id(response.getString("quiz_id"));
+                                prev_quizScore.setScore(response.getInt("score"));
+                                prev_quizScore.setStart_time(response.getString("start_time"));
+                                prev_quizScore.setStatus(response.getInt("status"));
+                                getInterestCategoryName(prev_quizScore.getArea_of_interest_cat_id());
+                            }else{
+                                setData();
+                            }
 
-
-                            getInterestCategoryName(prev_quizScore.getArea_of_interest_cat_id());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -279,8 +282,14 @@ public class HeartBeatIndexModule extends AppCompatActivity {
         linearLayout2.setVisibility(View.VISIBLE);
         btn_start_quiz.setVisibility(View.VISIBLE);
 
-        txt_quiz_highest_score.setText(String.valueOf(prev_quizScore.getScore()));
-        txt_quiz_interest.setText(String.valueOf(prev_quiz_interestDetails.getCsr_module_name()));
+        if(prev_quizScore.getId() != 0){
+            txt_quiz_highest_score.setText(String.valueOf(prev_quizScore.getScore()));
+            txt_quiz_interest.setText(String.valueOf(prev_quiz_interestDetails.getCsr_module_name()));
+        }else{
+            txt_quiz_highest_score.setText("NA");
+            txt_quiz_interest.setText("NA");
+        }
+
 
     }
 
