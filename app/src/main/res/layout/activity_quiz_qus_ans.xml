@@ -86,7 +86,7 @@
                         android:text="Exit"
                         android:id="@+id/btn_exit"
                         android:textColor="@color/white"
-                        android:background="@color/grey_color_1"/>
+                        android:background="@drawable/rounded_button_corners_setting_2"/>
 
                  </LinearLayout>
                  <LinearLayout
@@ -101,7 +101,7 @@
                          android:text="Next"
                          android:id="@+id/btn_next"
                          android:textColor="@color/white"
-                         android:background="@color/colorPrimary"/>
+                         android:background="@drawable/rounded_button_corners_setting"/>
 
                  </LinearLayout>
 
