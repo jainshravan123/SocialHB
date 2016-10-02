@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import heartbeat.social.tcs.socialhb.bean.SignInUser;
 import heartbeat.social.tcs.socialhb.bean.User;
@@ -55,8 +56,8 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_USER_ID, String.valueOf(signInUser.getUser().getId()));
-        values.put(KEY_EMP_ID, String.valueOf(signInUser.getUser().getEmp_id()));
+        values.put(KEY_USER_ID, String.valueOf(signInUser.getId()));
+        values.put(KEY_EMP_ID, String.valueOf(signInUser.getEmp_id()));
         db.insert(TABLE_NAME, null, values);
         db.close();
     }

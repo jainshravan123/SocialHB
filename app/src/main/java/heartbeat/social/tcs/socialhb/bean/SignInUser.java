@@ -8,7 +8,8 @@ public class SignInUser
 
 
     private int    id;
-    private User   user;
+    private String username;
+    private String emp_id;
     private String password;
     private Device device;
     private int    success;
@@ -22,12 +23,20 @@ public class SignInUser
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmp_id() {
+        return emp_id;
+    }
+
+    public void setEmp_id(String emp_id) {
+        this.emp_id = emp_id;
     }
 
     public String getPassword() {

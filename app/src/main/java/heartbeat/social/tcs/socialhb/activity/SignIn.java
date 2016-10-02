@@ -58,9 +58,7 @@ public class SignIn extends AppCompatActivity {
                 String password = edtPassword.getText().toString();
 
                 SignInUser signInUser = new SignInUser();
-                User       user       = new User();
-                user.setUsername(username);
-                signInUser.setUser(user);
+                signInUser.setUsername(username);
                 signInUser.setPassword(password);
 
 
@@ -107,11 +105,8 @@ public class SignIn extends AppCompatActivity {
 
         Log.e(TAG + "URL : ", url);
 
-        JSONObject user_json_obj = new JSONObject();
-        user_json_obj.put("username", sign_in_user.getUser().getUsername());
-
         final JSONObject sign_in_json_obj = new JSONObject();
-        sign_in_json_obj.put("user", user_json_obj);
+        sign_in_json_obj.put("username", sign_in_user.getUsername());
         sign_in_json_obj.put("password", sign_in_user.getPassword());
 
 
@@ -124,28 +119,19 @@ public class SignIn extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         // the response is already constructed as a JSONObject!
                         try {
-
-                            Log.e(TAG, response.toString());
                             String status = response.getString("success").toString();
 
                             if(status.equals("1")){
 
-                                JSONObject user_obj = response.getJSONObject("user");
-
                                 SignInUser signInUser = new SignInUser();
-                                int user_id   = Integer.parseInt(user_obj.getString("id"));
-                                String emp_id = user_obj.getString("emp_id");
-                                Log.e(TAG, "User ID : "+user_id);
-                                Log.e(TAG, "EMP  ID : "+emp_id);
-                                User user = new User();
-                                user.setId(user_id);
-                                user.setEmp_id(emp_id);
-                                signInUser.setUser(user);
+                                int user_id   = response.getInt("id");
+                                String emp_id = response.getString("emp_id");
+                                sign_in_user.setId(user_id);
+                                sign_in_user.setEmp_id(emp_id);
 
                                 //Storing User Data into SQLite
                                 DBHelper dbHelper = new DBHelper(getApplicationContext());
-                                dbHelper.addUserData(signInUser);
-
+                                dbHelper.addUserData(sign_in_user);
 
                                 FirebaseTokenStorage firebaseTokenStorage = new FirebaseTokenStorage(getApplicationContext());
 
@@ -266,6 +252,8 @@ public class SignIn extends AppCompatActivity {
 
         String url = Web_API_Config.user_profile_api+id;
 
+        Log.e(TAG, "Profile URI : "+url);
+
         //Create JSONObjectRequest for Volley
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -274,6 +262,7 @@ public class SignIn extends AppCompatActivity {
                         // the response is already constructed as a JSONObject!
                         sAlertDialog.dismiss();
 
+                        Log.e(TAG, "Profile Info : "+response.toString());
                         try {
                             int s_id                     = response.getInt("id");
                             int s_user_id                = response.getInt("user_id");
@@ -339,10 +328,10 @@ public class SignIn extends AppCompatActivity {
     public String checkSignInFieldsErrorMsg(SignInUser signInUser){
 
         String msg = "";
-        if((signInUser.getUser().getUsername().equals("")) && (signInUser.getPassword().equals(""))){
+        if((signInUser.getUsername().equals("")) && (signInUser.getPassword().equals(""))){
             msg = "Please fill both of the fields";
         }
-        else if((signInUser.getUser().getUsername().equals(""))){
+        else if((signInUser.getUsername().equals(""))){
             msg = "Username is empty";
         }
         else if((signInUser.getPassword().equals(""))){
@@ -354,7 +343,7 @@ public class SignIn extends AppCompatActivity {
 
     //Checking Whether the SignIn fields are empty or not
     public boolean checkSignInFields(SignInUser signInUser){
-        if(signInUser.getUser().getUsername().equals("") || signInUser.getPassword().equals(""))
+        if(signInUser.getUsername().equals("") || signInUser.getPassword().equals(""))
         {
             return false;
         }
