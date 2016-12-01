@@ -389,6 +389,20 @@ public class QuizQusAnsActivity extends AppCompatActivity {
 
         String url = Web_API_Config.posting_final_quiz_score;
 
+        FirebaseTokenStorage firebaseTokenStorage = new FirebaseTokenStorage(getApplicationContext());
+
+
+
+        if(firebaseTokenStorage.checkTokenExistence())
+        {
+            url = Web_API_Config.posting_final_quiz_score + "/"+firebaseTokenStorage.getTokenId();
+        }else{
+
+            url = Web_API_Config.posting_final_quiz_score +"/0";
+        }
+
+        Log.e(TAG, "Quiz Final Score URI : "+url);
+
         //Create JSONObjectRequest for Volley
         JsonObjectRequest jsonRequest = new JsonObjectRequest
                 (Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {

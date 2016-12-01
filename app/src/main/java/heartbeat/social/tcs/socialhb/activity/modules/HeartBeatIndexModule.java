@@ -27,7 +27,6 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import heartbeat.social.tcs.socialhb.R;
 import heartbeat.social.tcs.socialhb.activity.Dashboard;
 import heartbeat.social.tcs.socialhb.activity.modules.quiz_activity.QuizQusAnsActivity;
-import heartbeat.social.tcs.socialhb.activity.modules.quiz_activity.QuizStartActivity;
 import heartbeat.social.tcs.socialhb.bean.CSRInit;
 import heartbeat.social.tcs.socialhb.bean.QuizScore;
 import heartbeat.social.tcs.socialhb.bean.Web_API_Config;
@@ -103,8 +102,13 @@ public class HeartBeatIndexModule extends AppCompatActivity {
         quiz_start_confirmation_dialog = new SweetAlertDialog(HeartBeatIndexModule.this, SweetAlertDialog.NORMAL_TYPE);
         quiz_start_confirmation_dialog.setTitleText("Do you want to Start Quiz");
         quiz_start_confirmation_dialog.setContentText("Are you Sure");
+        quiz_start_confirmation_dialog.getProgressHelper().setBarColor(Color.parseColor("#334455"));
+        Button btn = (Button)quiz_start_confirmation_dialog.findViewById(R.id.confirm_button);
+        //btn.setText("sdmf");
+        //btn.setBackgroundResource(R.color.material_blue_grey_80);
+        Log.e(TAG+" : Dialog Type : ", String.valueOf(quiz_start_confirmation_dialog.getAlerType()));
         quiz_start_confirmation_dialog.show();
-
+        //quiz_start_confirmation_dialog.mConfirmButton.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_pressed_color));
         quiz_start_confirmation_dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {

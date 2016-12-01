@@ -1,7 +1,9 @@
-package heartbeat.social.tcs.socialhb;
+package heartbeat.social.tcs.socialhb.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import heartbeat.social.tcs.socialhb.R;
 
 public class Trial2 extends Activity {
 

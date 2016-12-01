@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="?android:selectableItemBackground">
+
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/img_fact"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:src="@drawable/thumbnail"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_fact"
+                android:textSize="20sp"
+                android:text="70% of Education"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/img_fact"
+                android:layout_toEndOf="@+id/img_fact"
+                android:textColor="@color/black_color"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Bangalore"
+                android:id="@+id/txt_fact_city"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/txt_fact"
+                android:layout_alignStart="@+id/txt_fact"
+                android:layout_below="@+id/txt_fact"
+                android:layout_marginTop="5dp"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,67 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/moduleCard"
+    android:id="@+id/cv2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp">
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground">
 
+        <TextView
+            android:id="@+id/catDataHeadingTxtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:text="CSR Initiative"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorPrimary" />
 
-        <LinearLayout
+        <include
+            android:id="@+id/include2"
+            layout="@layout/item_divider"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="1dp"
+            android:layout_below="@+id/catDataHeadingTxtView"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
 
-            <TextView
-                android:id="@+id/catDataHeadingTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_horizontal"
-                android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white"
-                android:background="@color/green_color_2"
-                android:layout_weight="4"/>
+        <TextView
+            android:id="@+id/catDataTxtView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/catDataHeadingTxtView"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="Initiative Instruction"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/material_blue_grey_80" />
 
-        </LinearLayout>
-
-
-        <!-- Used for the ripple effect on touch -->
-        <LinearLayout
-            android:id="@+id/mainHolder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?android:selectableItemBackground"
-            android:orientation="horizontal"
-            android:layout_weight="6"/>
-
-        <LinearLayout
-            android:id="@+id/placeNameHolder"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/catDataTxtView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingLeft="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/background_dark" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
-
 

@@ -127,6 +127,8 @@ public class DonateClothFragment extends Fragment
         JSONObject jsonObject  = new JSONObject();
         JSONObject jsonObject1 = new JSONObject();
         JSONObject jsonObject2 = new JSONObject();
+        JSONObject user_jsonObject = new JSONObject();
+        user_jsonObject.put("id", user_id);
 
         jsonObject1.put("id", 2);
         jsonObject1.put("category", null);
@@ -135,7 +137,7 @@ public class DonateClothFragment extends Fragment
         jsonObject2.put("status", null);
 
 
-        jsonObject.put("userId", user_id);
+        jsonObject.put("user", user_jsonObject);
         jsonObject.put("donateCategory", jsonObject1);
         jsonObject.put("noOfItems", num_of_books);
         jsonObject.put("donateItemStatus", jsonObject2);

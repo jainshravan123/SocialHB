@@ -9,8 +9,11 @@ public class Web_API_Config
     //Local Server
     //public static String root_domain_url              =           "http://192.168.56.1:8080/SocialHearbeatWebServices/api/";
 
+    //Local Server with Maven
+    public static String root_domain_url                =           "http://192.168.56.1:8080/socialheartbeat/api/";
+
     //Hosting Server
-    public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
+    //public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
     public static String root_image_url                 =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
 
     public static String user_login_api                 =           root_domain_url + "users/login";
@@ -26,14 +29,15 @@ public class Web_API_Config
     public static String user_profile_update_api        =           root_domain_url + "users/profile/updateProfile";
     public static String user_profile_pic_update_api    =           root_domain_url + "";
 
+    //API for donating the url
     public static String donate_item                    =           root_domain_url + "donate/donateItem";
+    public static String donated_item_status            =           root_domain_url + "donate/itemStatus/";
 
 
-
+    //API for firebase push notifications
     public static String without_signin_firebase_push_notification_API  =   root_domain_url + "notify/regiterTokenBeforeSignIn";
-    public static String firebase_push_notification_API                 =   root_domain_url + "notify/regiterToken";
-
     public static String firebase_update_user_id_for_registered_token_API    = root_domain_url + "notify/updateUserIDAfterSignIn";
+    public static String firebase_push_notification_API                 =   root_domain_url + "notify/regiterToken";
 
 
     //API for Quiz Part
@@ -53,5 +57,11 @@ public class Web_API_Config
     public static String get_quiz_prev_score_details                = root_domain_for_quiz + "getQuizScore";
 
 
+    //API for Geolocation Module
+    public static String officeAddressAPI                           = root_domain_url + "office_address/";
+    public static String areaOfInterestAPI                          = root_domain_url + "users/area_of_interest";
 
+
+    //API for Facts
+    public static String allFactsAPI                                = root_domain_url + "facts";
 }

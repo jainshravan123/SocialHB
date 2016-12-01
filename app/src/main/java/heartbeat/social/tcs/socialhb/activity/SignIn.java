@@ -148,11 +148,6 @@ public class SignIn extends AppCompatActivity {
                                     getUserProfileDataAndStoreIntoSQLiteDB();
                                 }
 
-
-
-
-
-
                             }else{
 
                                 sAlertDialog.dismiss();

@@ -84,14 +84,26 @@
             android:theme="@style/CustomStyle1" />
         <activity
             android:name=".activity.modules.quiz_activity.QuizQusAnsActivity"
-            android:theme="@style/CustomStyle1"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:theme="@style/CustomStyle1" />
         <activity
             android:name=".activity.modules.quiz_activity.QuizSubmitActivity"
-            android:theme="@style/CustomStyle1"/>
+            android:theme="@style/CustomStyle1" />
+        <activity
+            android:name=".activity.modules.sub_modules.DonatedItemStatusDescription"
+            android:theme="@style/CustomStyle1" />
         <activity
             android:name=".activity.modules.quiz_activity.QuizResultActivity"
+            android:theme="@style/CustomStyle1" />
+        <activity
+            android:name=".activity.modules.sub_modules.FactsList"
             android:theme="@style/CustomStyle1"/>
+        <activity
+            android:name=".activity.modules.sub_modules.FactDescription"
+            android:theme="@style/CustomStyle1">
+        </activity>
+
+        <activity android:name=".activity.Trial2" />
 
         <service android:name=".service.MyFirebaseMessagingService">
             <intent-filter>
@@ -104,7 +116,17 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Trial2" />
+        <!--
+        <receiver
+            android:name="heartbeat.social.tcs.socialhb.receiver.NetworkChangeReceiver"
+            android:label="NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        -->
+
 
     </application>
 
