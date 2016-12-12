@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -27,6 +28,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import heartbeat.social.tcs.socialhb.R;
 import heartbeat.social.tcs.socialhb.adapter.DonatedItemStatusAdapter;
@@ -40,7 +43,7 @@ import heartbeat.social.tcs.socialhb.bean.HostedUrl;
 import heartbeat.social.tcs.socialhb.bean.SingleDonateItem;
 import heartbeat.social.tcs.socialhb.bean.Web_API_Config;
 
-public class FactsList extends AppCompatActivity{
+public class FactsList extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
 
     private ArrayList<Fact> facts_list;
@@ -49,6 +52,7 @@ public class FactsList extends AppCompatActivity{
     private String TAG;
     private RecyclerView factRecycleView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
+    private FactAdapter factAdapter;
 
 
     @Override
@@ -77,14 +81,6 @@ public class FactsList extends AppCompatActivity{
         TAG = "FactsList";
 
         getAllFacts();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.facts_menu, menu);
-        return true;
-
     }
 
 
@@ -177,8 +173,68 @@ public class FactsList extends AppCompatActivity{
         mStaggeredLayoutManager.setSpanCount(1);
         factRecycleView.setLayoutManager(mStaggeredLayoutManager);
 
-        FactAdapter factAdapter = new FactAdapter(facts_list, getApplicationContext());
+        factAdapter = new FactAdapter(facts_list, getApplicationContext());
 
         factRecycleView.setAdapter(factAdapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.facts_menu, menu);
+
+        final MenuItem item = menu.findItem(R.id.fact_search);
+
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // Do something when collapsed
+                        factAdapter.setFilter(facts_list);
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        // Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
+        return true;
+
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        final List<Fact> fact_list = filter(facts_list, query);
+        factAdapter.setFilter(fact_list);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<Fact> fact_list = filter(facts_list, newText);
+        factAdapter.setFilter(fact_list);
+        return true;
+    }
+
+
+    private List<Fact> filter(List<Fact> facts_p, String query) {
+        query = query.toLowerCase();
+
+        final List<Fact> facts_list = new ArrayList<>();
+        for (Fact fact : facts_p) {
+            final String city_text = fact.getCity().getName().toLowerCase();
+            final String fact_text = fact.getFact().toLowerCase();
+            if (city_text.contains(query) || fact_text.contains(query)) {
+                facts_list.add(fact);
+            }
+        }
+        return facts_list;
+    }
+
+
 }

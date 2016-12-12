@@ -2,15 +2,20 @@ package heartbeat.social.tcs.socialhb.activity.modules;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -34,6 +39,7 @@ import heartbeat.social.tcs.socialhb.activity.modules.sub_modules.FactsList;
 import heartbeat.social.tcs.socialhb.bean.CSRInit;
 import heartbeat.social.tcs.socialhb.bean.City;
 import heartbeat.social.tcs.socialhb.bean.Country;
+import heartbeat.social.tcs.socialhb.bean.Fact;
 import heartbeat.social.tcs.socialhb.bean.OfficeAddress;
 import heartbeat.social.tcs.socialhb.bean.Web_API_Config;
 import heartbeat.social.tcs.socialhb.sqliteDb.DBHelper;
@@ -45,12 +51,11 @@ public class GEOModule extends AppCompatActivity {
     private String TAG;
 
     private ArrayList<OfficeAddress> officeAddressesList;
+    private ArrayList<CSRInit> csrInitCategories;
     private CSRInit areaOfInterest;
 
-    private LinearLayout linearLayout1, linearLayout2, linearLayout3;
-    private AppCompatButton searchBtn;
-    private TextView txt_area_of_interest;
-    private MaterialBetterSpinner spinner_city;
+    private LinearLayout linearLayout1, linearLayout3;
+    private MaterialBetterSpinner spinner_city, spinner_area_of_interest;
 
 
     @Override
@@ -61,10 +66,9 @@ public class GEOModule extends AppCompatActivity {
         Toolbar toolbar         = (Toolbar) findViewById(R.id.toolbar);
         progressBar = (ProgressBar) findViewById(R.id.prgBar1);
         linearLayout1 = (LinearLayout) findViewById(R.id.linearLayoutAreaOfInterest);
-        linearLayout2 = (LinearLayout) findViewById(R.id.linearLayoutCityAndSearch);
         linearLayout3 = (LinearLayout) findViewById(R.id.linearLayoutGoogleMap);
-        txt_area_of_interest = (TextView) findViewById(R.id.txt_area_of_interest);
         spinner_city   = (MaterialBetterSpinner) findViewById(R.id.spinner_city);
+        spinner_area_of_interest = (MaterialBetterSpinner) findViewById(R.id.spinner_area_of_interest);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,18 +86,34 @@ public class GEOModule extends AppCompatActivity {
         officeAddressesList = new ArrayList<OfficeAddress>();
         areaOfInterest      = new CSRInit();
 
-        searchBtn = (AppCompatButton) findViewById(R.id.searchBtn);
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent1 = new Intent(getApplicationContext(), FactsList.class);
-                startActivity(intent1);
-            }
-        });
-
         getOfficeAddresses();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.geo_menu, menu);
+        return true;
+
+    }
+
+   @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.geo_search :
+                                      Intent intent1 = new Intent(getApplicationContext(), FactsList.class);
+                                      startActivity(intent1);
+                                      return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void getOfficeAddresses(){
 
@@ -106,9 +126,6 @@ public class GEOModule extends AppCompatActivity {
                     public void onResponse(JSONArray response)
                     {
                         getAreaOfInterest();
-
-                        //Log.e(TAG +": Offc Addr : ", response.toString());
-
 
 
                         try {
@@ -207,8 +224,8 @@ public class GEOModule extends AppCompatActivity {
 
 
                        // Log.e(TAG +": AOI : ", response.toString());
+                        getAllCSRInitCategories();
 
-                        showData();
                     }
                 }, new Response.ErrorListener() {
 
@@ -223,8 +240,59 @@ public class GEOModule extends AppCompatActivity {
 
     }
 
+
+
+
+    public void getAllCSRInitCategories(){
+
+        csrInitCategories = new ArrayList<CSRInit>();
+
+        String uri = Web_API_Config.csr_init_enabled_modules;
+
+        final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(uri,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                            for(int i=0; i<response.length(); i++){
+
+                                try {
+
+                                    JSONObject csrJsonObject= (JSONObject) response.get(i);
+                                    CSRInit csrInit = new CSRInit();
+                                    csrInit.setCsr_module_id(csrJsonObject.getInt("id"));
+                                    csrInit.setCsr_module_name(csrJsonObject.getString("cat"));
+                                    csrInit.setCsr_module_icon(csrJsonObject.getString("cat_icon"));
+                                    csrInit.setCsr_module_status(csrJsonObject.getInt("status"));
+
+                                    csrInitCategories.add(csrInit);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                showData();
+                            }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+
+            }
+        });
+
+
+        Volley.newRequestQueue(this).add(jsonArrayRequest);
+
+    }
+
     public void showData(){
 
+        for(CSRInit csrInit : csrInitCategories){
+            Log.e(TAG, "Module Name : "+csrInit.getCsr_module_name());
+        }
 
         Map<Integer, OfficeAddress> map = new HashMap<Integer, OfficeAddress>();
         for(OfficeAddress officeAddress : officeAddressesList){
@@ -244,20 +312,17 @@ public class GEOModule extends AppCompatActivity {
         }
 
         Log.e(TAG, ":::::: AREA OF INTEREST::::::");
-        Log.e(TAG +"::: AOI :::", areaOfInterest.getCsr_module_name());
+        Log.e(TAG + "::: AOI :::", areaOfInterest.getCsr_module_name());
         progressBar.setVisibility(View.INVISIBLE);
         linearLayout1.setVisibility(View.VISIBLE);
-        linearLayout2.setVisibility(View.VISIBLE);
         linearLayout3.setVisibility(View.VISIBLE);
-        searchBtn.setVisibility(View.VISIBLE);
 
-        txt_area_of_interest.setText(areaOfInterest.getCsr_module_name());
+
+        //txt_area_of_interest.setText(areaOfInterest.getCsr_module_name());
         setDataToDropDown(officeAddressCollection);
     }
 
     private void setDataToDropDown(Collection<OfficeAddress> officeAddressCollection){
-
-
 
         ArrayList<String> cities_list = new ArrayList<String>();
 
@@ -269,6 +334,23 @@ public class GEOModule extends AppCompatActivity {
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customize_drop_down_item, cities_list);
         spinner_city.setAdapter(arrayAdapter);
+
+
+        ArrayList<String> csr_init_categories = new ArrayList<>();
+        for(CSRInit csrInit : csrInitCategories){
+            csr_init_categories.add(csrInit.getCsr_module_name());
+        }
+
+        //csrInitCategories
+        ArrayAdapter<String> aoiAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customize_drop_down_item, csr_init_categories);
+
+        aoiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner_area_of_interest.setAdapter(aoiAdapter);
+        //spinner_area_of_interest.setListSelection(2);
+
+        //spinner_city.setSelection(2);
+        //Log.e(TAG , "Spinner Positon : "+;);
 
     }
 }

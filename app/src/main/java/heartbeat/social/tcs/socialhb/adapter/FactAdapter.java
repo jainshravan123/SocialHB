@@ -15,6 +15,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import heartbeat.social.tcs.socialhb.R;
 import heartbeat.social.tcs.socialhb.activity.modules.sub_modules.DonatedItemStatusDescription;
@@ -30,6 +31,7 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.ViewFactAdapte
 
     private ArrayList<Fact> facts_list;
     private Context context;
+    private String TAG = "FactAdapter";
 
     public FactAdapter(ArrayList<Fact> c_facts_list, Context c_ctx){
         this.facts_list  =   c_facts_list;
@@ -101,4 +103,13 @@ Log.e("URL", facts_list.get(position).getHostedImage().getImage_url());
 
     }
 
+    public void setFilter(List<Fact> factList_p){
+        Log.e(TAG, "::: Filtered Data List:::");
+        for(Fact fact : factList_p){
+            Log.e(TAG, fact.getCity().getName());
+        }
+        facts_list = new ArrayList<>();
+        facts_list.addAll(factList_p);
+        notifyDataSetChanged();
+    }
 }

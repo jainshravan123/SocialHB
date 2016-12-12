@@ -10,10 +10,12 @@ public class Web_API_Config
     //public static String root_domain_url              =           "http://192.168.56.1:8080/SocialHearbeatWebServices/api/";
 
     //Local Server with Maven
-    public static String root_domain_url                =           "http://192.168.56.1:8080/socialheartbeat/api/";
+    //public static String root_domain_url                =           "http://192.168.56.1:8080/socialheartbeat/api/";
 
     //Hosting Server
-    //public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
+    public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
+
+    //Image Server Path
     public static String root_image_url                 =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
 
     public static String user_login_api                 =           root_domain_url + "users/login";
