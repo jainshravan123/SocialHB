@@ -13,7 +13,7 @@ public class Web_API_Config
     //public static String root_domain_url                =           "http://192.168.56.1:8080/socialheartbeat/api/";
 
     //Hosting Server
-    public static String root_domain_url                =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
+    public static String root_domain_url              =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
 
     //Image Server Path
     public static String root_image_url                 =           "https://socialheartbeat-bloggie.rhcloud.com/api/";
@@ -62,8 +62,17 @@ public class Web_API_Config
     //API for Geolocation Module
     public static String officeAddressAPI                           = root_domain_url + "office_address/";
     public static String areaOfInterestAPI                          = root_domain_url + "users/area_of_interest";
-
+    public static String nearestTcsOffcLocAPI                       = root_domain_url + "office_address/nearest/";
 
     //API for Facts
     public static String allFactsAPI                                = root_domain_url + "facts";
+    public static String factsByCityIdAPI                           = root_domain_url + "facts/city/";
+    //API for Location
+    public static String getActualAddress                           = "";
+
+    //CSR Initiatives More Info Knowmax link
+    public static String csr_init_more_info                         = "https://knowmax.ultimatix.net/sites/cs-cop/default.aspx";
+
+
+
 }

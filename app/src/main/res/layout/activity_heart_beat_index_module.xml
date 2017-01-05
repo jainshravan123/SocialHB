@@ -191,8 +191,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="Interest"
-                            android:id="@+id/textView8"
+                            android:text="Previous Score"
+                            android:id="@+id/textView25"
                             android:layout_below="@+id/txt_quiz_highest_score"
                             android:layout_alignLeft="@+id/include3"
                             android:layout_alignStart="@+id/include3"
@@ -204,8 +204,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="Your Area of Interest"
+                            android:id="@+id/textView8"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/material_blue_grey_80"
+                            android:layout_below="@+id/txtPreviousScore"
+                            android:layout_alignLeft="@+id/textView25"
+                            android:layout_alignStart="@+id/textView25" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:text="Education"
                             android:id="@+id/txt_quiz_interest"
+                            android:layout_below="@+id/textView25"
+                            android:layout_alignLeft="@+id/txt_quiz_highest_score"
+                            android:layout_alignStart="@+id/txt_quiz_highest_score" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:text="08"
+                            android:id="@+id/txtPreviousScore"
                             android:layout_below="@+id/textView23"
                             android:layout_alignLeft="@+id/txt_quiz_highest_score"
                             android:layout_alignStart="@+id/txt_quiz_highest_score" />
@@ -243,7 +266,7 @@
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
 

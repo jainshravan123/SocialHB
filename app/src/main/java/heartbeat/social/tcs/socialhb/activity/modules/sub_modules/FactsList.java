@@ -3,6 +3,7 @@ package heartbeat.social.tcs.socialhb.activity.modules.sub_modules;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -53,12 +54,19 @@ public class FactsList extends AppCompatActivity implements SearchView.OnQueryTe
     private RecyclerView factRecycleView;
     private StaggeredGridLayoutManager mStaggeredLayoutManager;
     private FactAdapter factAdapter;
+    private City city_obj;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facts_list);
+
+        Intent intent1 = getIntent();
+        String selected_city = intent1.getStringExtra("selected_city");
+        Log.e("Selected City Here List", selected_city);
+        city_obj = new City();
+        city_obj.setId(Integer.parseInt(selected_city.trim()));
 
         toolbar         = (Toolbar) findViewById(R.id.toolbar);
         progressBar     = (ProgressBar) findViewById(R.id.prgBar1);
@@ -80,6 +88,8 @@ public class FactsList extends AppCompatActivity implements SearchView.OnQueryTe
         facts_list = new ArrayList<Fact>();
         TAG = "FactsList";
 
+
+
         getAllFacts();
     }
 
@@ -88,7 +98,7 @@ public class FactsList extends AppCompatActivity implements SearchView.OnQueryTe
     public void getAllFacts(){
 
 
-        String uri = Web_API_Config.allFactsAPI;
+        String uri = Web_API_Config.factsByCityIdAPI + city_obj.getId();
 
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(uri,

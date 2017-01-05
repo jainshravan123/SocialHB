@@ -3,6 +3,8 @@ package heartbeat.social.tcs.socialhb.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -19,7 +21,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import heartbeat.social.tcs.socialhb.R;
+import heartbeat.social.tcs.socialhb.activity.modules.GEOModule;
 import heartbeat.social.tcs.socialhb.bean.Module;
 import heartbeat.social.tcs.socialhb.utility.ModuleSelector;
 
@@ -124,6 +128,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ViewModule
 
         @Override
         public void onClick(View v) {
+
+
 
             int position = getAdapterPosition();
 

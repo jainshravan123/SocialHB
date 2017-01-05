@@ -1,8 +1,14 @@
 package heartbeat.social.tcs.socialhb.activity.modules;
 
+import android.Manifest;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +30,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +40,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import heartbeat.social.tcs.socialhb.R;
+import heartbeat.social.tcs.socialhb.activity.Trial;
+import heartbeat.social.tcs.socialhb.activity.modules.quiz_activity.QuizQusAnsActivity;
 import heartbeat.social.tcs.socialhb.activity.modules.sub_modules.FactsList;
 import heartbeat.social.tcs.socialhb.bean.CSRInit;
 import heartbeat.social.tcs.socialhb.bean.City;
@@ -42,9 +51,11 @@ import heartbeat.social.tcs.socialhb.bean.Country;
 import heartbeat.social.tcs.socialhb.bean.Fact;
 import heartbeat.social.tcs.socialhb.bean.OfficeAddress;
 import heartbeat.social.tcs.socialhb.bean.Web_API_Config;
+import heartbeat.social.tcs.socialhb.fragment.MapFragment;
+import heartbeat.social.tcs.socialhb.network.LocationProvider;
 import heartbeat.social.tcs.socialhb.sqliteDb.DBHelper;
 
-public class GEOModule extends AppCompatActivity {
+public class GEOModule extends AppCompatActivity{
 
     private ProgressBar progressBar;
     private Toolbar toolbar;
@@ -55,20 +66,29 @@ public class GEOModule extends AppCompatActivity {
     private CSRInit areaOfInterest;
 
     private LinearLayout linearLayout1, linearLayout3;
-    private MaterialBetterSpinner spinner_city, spinner_area_of_interest;
-
+    private Spinner spinner_city, spinner_area_of_interest;
+    int flag = 0;
+    private String latitude, longitude;
+    private LocationProvider mLocationProvider;
+    private Fragment map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geomodule);
 
+        /*Intent intent1 = new Intent(getApplicationContext(), Trial.class);
+        startActivity(intent1);*/
+        //getIntent().setAction("Already created");
+
         Toolbar toolbar         = (Toolbar) findViewById(R.id.toolbar);
         progressBar = (ProgressBar) findViewById(R.id.prgBar1);
         linearLayout1 = (LinearLayout) findViewById(R.id.linearLayoutAreaOfInterest);
         linearLayout3 = (LinearLayout) findViewById(R.id.linearLayoutGoogleMap);
-        spinner_city   = (MaterialBetterSpinner) findViewById(R.id.spinner_city);
-        spinner_area_of_interest = (MaterialBetterSpinner) findViewById(R.id.spinner_area_of_interest);
+        spinner_city   = (Spinner) findViewById(R.id.spinner_city);
+        spinner_area_of_interest  = (Spinner) findViewById(R.id.spinner_area_of_interest);
+        map = (Fragment)getFragmentManager().findFragmentById(R.id.map);
+        //mLocationProvider = new LocationProvider(this, this);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,8 +106,51 @@ public class GEOModule extends AppCompatActivity {
         officeAddressesList = new ArrayList<OfficeAddress>();
         areaOfInterest      = new CSRInit();
 
-        getOfficeAddresses();
+
+
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        if(!gps_enabled){
+            progressBar.setVisibility(View.GONE);
+
+            new SweetAlertDialog(GEOModule.this, SweetAlertDialog.ERROR_TYPE)
+                    .setTitleText("Location Off")
+                    .setContentText("Please turn on the location").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    Intent viewIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(viewIntent);
+                }
+            }).show();
+
+        }else{
+            getOfficeAddresses();
+
+        }
+
     }
+
+   /* @Override
+    protected void onResume() {
+
+        String action = getIntent().getAction();
+        // Prevent endless loop by adding a unique action, don't restart if action is present
+        if(action == null || !action.equals("Already created")) {
+            Log.v("Example", "Force restart");
+            Intent intent = new Intent(this, GEOModule.class);
+            startActivity(intent);
+            finish();
+        }
+        // Remove the unique action so the next time onResume is called it will restart
+        else
+            getIntent().setAction(null);
+
+        super.onResume();
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,6 +177,17 @@ public class GEOModule extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+/*    @Override
+    protected void onResume() {
+        super.onResume();
+        mLocationProvider.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mLocationProvider.disconnect();
+    }*/
 
     public void getOfficeAddresses(){
 
@@ -324,12 +398,16 @@ public class GEOModule extends AppCompatActivity {
 
     private void setDataToDropDown(Collection<OfficeAddress> officeAddressCollection){
 
+
+
         ArrayList<String> cities_list = new ArrayList<String>();
+        ArrayList<City>  cities_data  = new ArrayList<City>();
 
 
         for(OfficeAddress officeAddress : officeAddressCollection)
         {
             cities_list.add(officeAddress.getCity().getName());
+            cities_data.add(officeAddress.getCity());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customize_drop_down_item, cities_list);
@@ -344,13 +422,60 @@ public class GEOModule extends AppCompatActivity {
         //csrInitCategories
         ArrayAdapter<String> aoiAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.customize_drop_down_item, csr_init_categories);
 
-        aoiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //aoiAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        //spinner_area_of_interest.setAdapter(aoiAdapter);
         spinner_area_of_interest.setAdapter(aoiAdapter);
-        //spinner_area_of_interest.setListSelection(2);
 
-        //spinner_city.setSelection(2);
-        //Log.e(TAG , "Spinner Positon : "+;);
+        int defaultAOIPos = 0;
+        for(CSRInit csrInit : csrInitCategories){
+            if(csrInit.getCsr_module_id() == areaOfInterest.getCsr_module_id()){
+               break;
+            }
+            defaultAOIPos++;
+        }
 
+        spinner_area_of_interest.setSelection(defaultAOIPos);
+
+
+        selectdData(cities_data);
     }
+
+    public void selectdData(final ArrayList<City> cities_data){
+
+
+        spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Log.e(TAG, "SELECTED CITY DATA 1 : " + spinner_city.getSelectedItem().toString());
+                Log.e(TAG, "SELECTED CITY DATA 2 : " + cities_data.get(position).getName());
+                Log.e(TAG, "SELCTED CITY ID 3 : " + cities_data.get(position).getId());
+                if (flag > 0) {
+                    Intent intent1 = new Intent(getApplicationContext(), FactsList.class);
+                    intent1.putExtra("selected_city", String.valueOf(cities_data.get(position).getId()));
+                    //intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent1);
+                }
+
+                flag++;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
+   /* @Override
+    public void handleNewLocation(Location location) {
+        double currentLatitude = location.getLatitude();
+        double currentLongitude = location.getLongitude();
+
+        //Log.e("My Latitude : ", String.valueOf(currentLatitude));
+
+
+    }*/
 }

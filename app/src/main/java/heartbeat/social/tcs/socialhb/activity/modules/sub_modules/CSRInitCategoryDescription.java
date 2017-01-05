@@ -1,16 +1,24 @@
 package heartbeat.social.tcs.socialhb.activity.modules.sub_modules;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -44,6 +52,10 @@ public class CSRInitCategoryDescription extends AppCompatActivity {
     DrawerLayout               mDrawerLayout;
     ArrayList<CSRInitCatData>  cat_data_list;
     StaggeredGridLayoutManager mStaggeredLayoutManager;
+    TextView moreInfoTxtView;
+    ImageView moreInfoImgView;
+    LinearLayout linearLayout;
+    ImageView csr_image_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,10 @@ public class CSRInitCategoryDescription extends AppCompatActivity {
         mDrawerLayout     = (DrawerLayout) findViewById(R.id.drawer_layout);
         prgBar1           = (ProgressBar) findViewById(R.id.prgBar1);
         recyclerView1     = (RecyclerView) findViewById(R.id.recycleView1);
+        moreInfoTxtView   = (TextView) findViewById(R.id.moreInfoTxtView);
+        moreInfoImgView   = (ImageView) findViewById(R.id.moreInfoImgView);
+        linearLayout      = (LinearLayout) findViewById(R.id.linearLayout);
+        csr_image_view    = (ImageView) findViewById(R.id.csr_image_view);
         cat_data_list     =  new ArrayList<CSRInitCatData>();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,6 +100,53 @@ public class CSRInitCategoryDescription extends AppCompatActivity {
         }
         else{
             prgBar1.setVisibility(View.GONE);
+        }
+
+
+        moreInfoTxtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Web_API_Config.csr_init_more_info));
+                startActivity(browserIntent);
+            }
+        });
+
+        moreInfoImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Web_API_Config.csr_init_more_info));
+                startActivity(browserIntent);
+            }
+        });
+
+        //Getting Screen Size
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        windowmanager.getDefaultDisplay().getMetrics(displayMetrics);
+        int deviceWidth = displayMetrics.widthPixels;
+        int deviceHeight = displayMetrics.heightPixels;
+
+        ViewGroup.LayoutParams params = csr_image_view.getLayoutParams();
+        params.height = (deviceHeight * 28) / 100;
+        csr_image_view.setLayoutParams(params);
+
+
+        switch(module_cat_id){
+            case 1:
+                        csr_image_view.setImageResource(R.drawable.environment);
+                        break;
+            case 2:
+                        csr_image_view.setImageResource(R.drawable.education);
+                        break;
+            case 3:
+                        csr_image_view.setImageResource(R.drawable.health);
+                        break;
+            case 4:
+                        csr_image_view.setImageResource(R.drawable.affirmative_actions);
+                        break;
+            default:
+                        csr_image_view.setImageResource(R.drawable.environment);
+                        break;
         }
 
     }
@@ -148,7 +211,7 @@ public class CSRInitCategoryDescription extends AppCompatActivity {
         Volley.newRequestQueue(this).add(jsonArrayRequest);
 
 
-
+        linearLayout.setVisibility(View.VISIBLE);
         recyclerView1.setHasFixedSize(true);
         mStaggeredLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mStaggeredLayoutManager.setSpanCount(1);

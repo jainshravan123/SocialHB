@@ -11,6 +11,8 @@ public class OfficeAddress {
     private String building_name;
     private String postal_code;
     private String locality_name;
+    private String latitude;
+    private String longitude;
     private City city;
 
     public int getId() {
@@ -59,6 +61,22 @@ public class OfficeAddress {
 
     public void setLocality_name(String locality_name) {
         this.locality_name = locality_name;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
     public City getCity() {
