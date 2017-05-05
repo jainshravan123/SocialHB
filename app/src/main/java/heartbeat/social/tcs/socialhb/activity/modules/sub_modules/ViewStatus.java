@@ -33,7 +33,7 @@ public class ViewStatus extends AppCompatActivity {
 
 
     private ArrayList<SingleDonateItem> donateItemArrayList;
-    private String TAG = "ViewStatus";
+    private String TAG = "ViewStatus1";
     private Toolbar toolbar;
     private RecyclerView donate_item_status_recycler_view;
     private ProgressBar progressBar;
